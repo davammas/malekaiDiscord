@@ -1,0 +1,29 @@
+{
+  "name": "murderBot",
+  "version": "1.0.0",
+  "description": "Discord Bot Framework for Rapid Deployment",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheScree/murderBot"
+  },
+  "keywords": [
+    "Discord.js",
+    "Node",
+    "Bot"
+  ],
+  "author": "Scree",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheScree/murderBot/issues"
+  },
+  "homepage": "https://github.com/TheScree/murderBot#readme",
+    "dependencies": {
+       "moment": "~2.14.1",
+       "discord.js": "^11.1.0",
+       "rethinkdbdash": "~2.3.21",
+     }
+}
