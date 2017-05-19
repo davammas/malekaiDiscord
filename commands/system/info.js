@@ -64,7 +64,7 @@ exports.run = (bot, msg, params, perms = []) => {
   //Source Details
   theEmbed.addField(`__**MurderBot Source:**__`, `[https://github.com/TheScree/murderBot](https://github.com/TheScree/murderBot)`);
   theEmbed.setFooter(`Brought to you by https://scr.ee ​`, bot.user.avatarURL);
-  return msg.channel.sendEmbed(theEmbed).catch(console.log);
+  return msg.channel.send({embed:theEmbed}).catch(console.log);
 };
 
 exports.conf = {
