@@ -26,8 +26,8 @@ exports.run = (bot, msg, params, perms = []) => {
   let cpuSpeed = (cpu[0].speed / 1000) + "MHZ";
   let theEmbed = new Discord.RichEmbed();
   theEmbed.setColor(11141396);
-  theEmbed.setTitle(`__**MurderBot**__`);
-  theEmbed.setDescription('The first thing we do, lets kill all the lawyers.')
+  theEmbed.setTitle(`__**MalekaiBot**__`);
+  theEmbed.setDescription('Without me, you are nothing.')
   theEmbed.setThumbnail(bot.user.avatarURL);
   //System Stats
   systemStats.push(`Platform: **${os.platform()}**`);
@@ -56,14 +56,14 @@ exports.run = (bot, msg, params, perms = []) => {
   //Bot Statistics
   botStats.push(`Uptime: **${uptimeString}**`);
   botStats.push(`Available Bot Commands: **${bot.commands.size}**`);
-  theEmbed.addField('__**murderBot Stats:**__', botStats, true);
+  theEmbed.addField('__**malekaiBot Stats:**__', botStats, true);
   //Powered By
   poweredBy.push(`Discord.js: **v${Discord.version}**`);
   poweredBy.push(`Moment.js: **v2.17.1**`);
   theEmbed.addField(`__**Powered By:**__`, poweredBy, true);
   //Source Details
-  theEmbed.addField(`__**MurderBot Source:**__`, `[https://github.com/TheScree/murderBot](https://github.com/TheScree/murderBot)`);
-  theEmbed.setFooter(`Brought to you by https://scr.ee ​`, bot.user.avatarURL);
+  theEmbed.addField(`__**malekaiBot Source:**__`, `[https://github.com/TheObsidian/malekaiBot](https://github.com/TheObsidian/malekaiBot)`);
+  theEmbed.setFooter(`Brought to you by https://stealthed.blog ​`, bot.user.avatarURL);
   return msg.channel.send({embed:theEmbed}).catch(console.log);
 };
 

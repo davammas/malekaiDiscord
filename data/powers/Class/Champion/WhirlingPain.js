@@ -1,0 +1,16 @@
+exports.power = {
+  name: "Whirling Pain",
+  archetype: "Champion",
+  discipline: false,
+  bar: "Primary",
+  type: "Attack",
+  cast_time: "Instant",
+  duration: false,
+  lifetime: false,
+  target: "Sphere",
+  velocity: false,
+  range: "4.3 Meters",
+  cost: "11 Rage",
+  tooltip: "Sweep 7 times around you dealing 587 - 794 + 69% Weapon Damage per swing. You may move while spinning.",
+  icon: false,
+};
