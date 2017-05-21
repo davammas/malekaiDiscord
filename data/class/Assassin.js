@@ -1,7 +1,7 @@
 
 exports.class = {
   name: "Assassin",
-  description: false,
-  icon: false,
+  description: "",
+  icon: "https://crowfall.wiki/images/class/assassin.png",
   races: ["Half-Elf","Nethari","Fae","High-Elf"]
-};
+}

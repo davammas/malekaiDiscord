@@ -2,6 +2,6 @@
 exports.race = {
   classes: ["Ranger","Druid","Frostweaver"],
   name: "Wood-Elf",
-  description: false,
-  icon: false
+  description: "",
+  icon: "https://crowfall.wiki/images/race/woodelf.png"
 };

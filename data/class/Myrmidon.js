@@ -1,7 +1,7 @@
 
 exports.class = {
   name: "Myrmidon",
-  description: false,
-  icon: false,
+  description: "",
+  icon: "https://crowfall.wiki/images/class/myrmidon.png",
   races: ["Stoneborn","Half-Giant","Minotaur"]
 };

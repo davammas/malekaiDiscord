@@ -1,7 +1,7 @@
 
 exports.class = {
   name: "Frostweaver",
-  description: false,
-  icon: false,
+  description: "",
+  icon: "https://crowfall.wiki/images/class/frostweaver.png",
   races: ["Fae","Wood-Elf","High-Elf"]
 };

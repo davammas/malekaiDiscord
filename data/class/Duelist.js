@@ -1,7 +1,7 @@
 
 exports.class = {
   name: "Duelist",
-  description: false,
-  icon: false,
+  description: "",
+  icon: "https://crowfall.wiki/images/class/duelist.png",
   races: ["Guinecean"]
 };

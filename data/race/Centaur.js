@@ -2,6 +2,6 @@
 exports.race = {
   classes: ["Knight","Champion","Cleric"],
   name: "Centaur",
-  description: false,
-  icon: false
+  description: "",
+  icon: "https://crowfall.wiki/images/race/centaur.png"
 };

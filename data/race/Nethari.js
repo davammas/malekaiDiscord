@@ -2,6 +2,6 @@
 exports.race = {
   classes: ["Confessor","Templar","Assassin"],
   name: "Nethari",
-  description: false,
-  icon: false
+  description: "",
+  icon: "https://crowfall.wiki/images/race/nethari.png"
 };

@@ -1,7 +1,7 @@
 
 exports.class = {
   name: "Champion",
-  description: false,
-  icon: false,
+  description: "",
+  icon: "https://crowfall.wiki/images/class/champion.png",
   races: ["Stoneborn","Half-Giant","Minotaur","Centaur"]
 };

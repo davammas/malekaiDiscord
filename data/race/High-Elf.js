@@ -2,6 +2,6 @@
 exports.race = {
   classes: ["Knight","Confessor","Assassin","Frostweaver"],
   name: "High-Elf",
-  description: false,
-  icon: false
+  description: "",
+  icon: "https://crowfall.wiki/images/race/highelf.png"
 };
