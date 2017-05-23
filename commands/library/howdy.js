@@ -78,7 +78,7 @@ exports.run = (bot, msg, params, perms = []) => {
         //power data loader
         if (book.hasOwnProperty('power')) {
           powerCounter++
-          bot.db.table("powersLibrary")
+          bot.db.table("powerLibrary")
             .insert({
               id: book.power.name,
               source: book.power.source,
