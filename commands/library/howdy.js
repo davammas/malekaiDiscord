@@ -2,12 +2,12 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const fs = require('fs');
 const path = require("path");
-let classCounter = 0;
-let raceCounter = 0;
-let disciplineCounter = 0;
-let powerCounter = 0;
 
 exports.run = (bot, msg, params, perms = []) => {
+  let classCounter = 0;
+  let raceCounter = 0;
+  let disciplineCounter = 0;
+  let powerCounter = 0;
   //Loads All Powers
   let scribe = function(currentPath) {
     let files = fs.readdirSync(currentPath);
@@ -57,6 +57,7 @@ exports.run = (bot, msg, params, perms = []) => {
           bot.db.table("disciplineLibrary")
             .insert({
               id: book.discipline.name,
+              type: book.discipline.type,
               description: book.discipline.description,
               icon: book.discipline.icon,
               can_equip: book.discipline.can_equip,

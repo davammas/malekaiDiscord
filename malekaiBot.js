@@ -2,7 +2,9 @@ const Discord = require("discord.js");
 const config = require('./config');
 const r = require('rethinkdbdash')({
   host: 'localhost',
-  db: 'crowfallData'
+  db: 'crowfallData',
+  buffer: 5,
+  max: 10
 });
 const malekaiBot = new Discord.Client();
 malekaiBot.commands = new Discord.Collection();
@@ -34,7 +36,7 @@ malekaiBot.on("message", msg => {
       cmd = malekaiBot.commands.get(malekaiBot.aliases.get(command));
     }
     //check to make sure bot can send messages/embeds
-    if (cmd && currentPermissions && !currentPermissions.hasPermissions(["SEND_MESSAGES", "EMBED_LINKS"]))
+    if (cmd && currentPermissions && !currentPermissions.has(["SEND_MESSAGES", "EMBED_LINKS"]))
       malekaiBot.log("malekaiBot must have BOTH Send Message and Embed Link permissions to use this command!");
     //check if command exists (if so check user permissions) and then run it.
     if (cmd) {
@@ -45,7 +47,7 @@ malekaiBot.on("message", msg => {
         cmd.run(malekaiBot, msg, params, perms);
       }
       //clean up after yourself malekaiBot!
-      if (currentPermissions && currentPermissions.hasPermission("MANAGE_MESSAGES")) {
+      if (currentPermissions && currentPermissions.has("MANAGE_MESSAGES")) {
         msg.delete(4000);
       }
     }
@@ -54,6 +56,9 @@ malekaiBot.on("message", msg => {
 
 malekaiBot.on("ready", () => {
   malekaiBot.log("malekaiBot is ready to recieve commands!");
+  malekaiBot.guilds.forEach(function(aGuild){
+    aGuild.members.get(malekaiBot.user.id).setNickname("malekaiBot");
+  })
 });
 
 malekaiBot.on("error", (err) => {
