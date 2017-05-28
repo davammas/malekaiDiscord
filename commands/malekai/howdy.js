@@ -43,7 +43,7 @@ exports.run = (bot, msg, params, perms = []) => {
               id: book.race.name,
               description: book.race.description,
               icon: book.race.icon,
-              races: book.race.classes
+              classes: book.race.classes
             }, {
               conflict: 'replace'
             })
