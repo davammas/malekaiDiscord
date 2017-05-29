@@ -24,7 +24,9 @@ exports.run = (bot, msg, params, perms = []) => {
           classCounter++;
           bot.db.table("classLibrary")
             .insert({
-              id: book.class.name,
+              id: book.class.name.split(' ').join('_').toLowerCase(),
+              data_type: 'class',
+              name: book.class.name,
               description: book.class.description,
               icon: book.class.icon,
               races: book.class.races
@@ -40,7 +42,9 @@ exports.run = (bot, msg, params, perms = []) => {
           raceCounter++;
           bot.db.table("raceLibrary")
             .insert({
-              id: book.race.name,
+              id: book.race.name.split('-').join('_').toLowerCase(),
+              data_type: 'race',
+              name: book.race.name,
               description: book.race.description,
               icon: book.race.icon,
               classes: book.race.classes
@@ -56,7 +60,9 @@ exports.run = (bot, msg, params, perms = []) => {
           disciplineCounter++
           bot.db.table("disciplineLibrary")
             .insert({
-              id: book.discipline.name,
+              id: book.discipline.name.split(' ').join('_').toLowerCase(),
+              data_type: 'discipline',
+              name: book.discipline.name,
               type: book.discipline.type,
               description: book.discipline.description,
               icon: book.discipline.icon,
@@ -81,7 +87,9 @@ exports.run = (bot, msg, params, perms = []) => {
           powerCounter++
           bot.db.table("powerLibrary")
             .insert({
-              id: book.power.name,
+              id: book.power.name.split(' ').join('_').toLowerCase(),
+              data_type: 'power',
+              name: book.power.name,
               source: book.power.source,
               type: book.power.type,
               cast_type: book.power.cast_type,
@@ -92,7 +100,7 @@ exports.run = (bot, msg, params, perms = []) => {
               range: book.power.range,
               next_chain: book.power.next_chain,
               cost: book.power.cost,
-              tooltip: book.power.tooltip,
+              description: book.power.tooltip,
               icon: book.power.icon
             }, {
               conflict: 'replace'
@@ -109,10 +117,10 @@ exports.run = (bot, msg, params, perms = []) => {
   scribe('./data');
   let counterArray = [];
   counterArray.push("The Crowfall Library was updated...")
-  counterArray.push(`${classCounter} Class "Books" Found.`)
-  counterArray.push(`${raceCounter} Race "Books" Found.`)
-  counterArray.push(`${disciplineCounter} Discipline "Books" Found.`)
-  counterArray.push(`${powerCounter} Power "Books" Found`)
+  counterArray.push(`${classCounter} Class "Books" are in the collection.`)
+  counterArray.push(`${raceCounter} Race "Books" are in the collection.`)
+  counterArray.push(`${disciplineCounter} Discipline "Books" are in the collection.`)
+  counterArray.push(`${powerCounter} Power "Books" are in the collection.`)
   msg.channel.send(counterArray)
 };
 

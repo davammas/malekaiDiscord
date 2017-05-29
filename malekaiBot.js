@@ -17,6 +17,9 @@ malekaiBot.altPaths = new Discord.Collection();
 //console logging with timestamps available across the bot's many tendrils.
 malekaiBot.log = require('./functions/log.js').cmd;
 
+//api-call to the api.crowfall.wiki service
+malekaiBot.callAPI = require('./functions/apiCall.js').cmd;
+
 //creates link to database and assigns it to a parameter of the bot instance.
 malekaiBot.db = r;
 
@@ -37,13 +40,6 @@ malekaiBot.on("message", msg => {
   if (msg.mentions.members.get(malekaiBot.user.id)) {
     //we need a returned parse here, need the results to move forward with this handler
     let parsed = malekaiBot.nlp(msg, malekaiBot);
-    //let action = `**Action:** ${}`;
-    //let nouns = `**nouns:** ${parsed.normalize().nouns().toSingular().out()}`;
-    //let adjectives = `**adjectives** ${parsed.normalize().adjectives().out()}`;
-    //let adverbs = `**adverbs** ${parsed.normalize().adverbs().out()}`;
-    //let races = `**crowfall races detected:**${parsed.match('#Race').out()}`;
-    //let classes = `**crowfall classes detected:**${parsed.match('#Class').out()}`;
-    //return msg.channel.send(`**Sentence Analysis**\n**Post-Parsed Sentence:** _${parsed.out()}_\n${action}\n${races}\n${classes}`);
     let theverbs = parsed.normalize().verbs().out('array');
     let path = false;
     theverbs.forEach(function(verb) {

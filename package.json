@@ -1,5 +1,5 @@
 {
-  "name": "murderBot",
+  "name": "malekaiBot",
   "version": "1.0.0",
   "description": "Discord Bot Framework for Rapid Deployment",
   "main": "bot.js",
@@ -8,22 +8,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheScree/murderBot"
+    "url": "git+https://github.com/TheObsidian/malekaiDiscord"
   },
   "keywords": [
     "Discord.js",
     "Node",
-    "Bot"
+    "Bot",
+    "Crowfall",
+    "Malekai",
+    "NLP",
+    "RethinkDB"
   ],
   "author": "Scree",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheScree/murderBot/issues"
+    "url": "https://github.com/TheObsidian/malekaiDiscord/issues"
   },
-  "homepage": "https://github.com/TheScree/murderBot#readme",
-    "dependencies": {
-       "moment": "~2.14.1",
-       "discord.js": "^11.1.0",
-       "rethinkdbdash": "~2.3.21",
-     }
+  "homepage": "https://github.com/TheObsidian/malekaiDiscord#readme",
+  "dependencies": {
+    "compromise": "^10.4.2",
+    "discord.js": "^11.1.0",
+    "erlpack": "github:hammerandchisel/erlpack",
+    "moment": "~2.14.1",
+    "rethinkdbdash": "~2.3.21",
+    "uws": "^0.14.5",
+    "ws": "^3.0.0"
+  }
 }
