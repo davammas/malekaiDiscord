@@ -11,32 +11,33 @@ exports.cmd = function(msg, bot) {
   let botName = botMember.nickname ? botMember.nickname : bot.user.username;
   let removeBotName = msg.cleanContent.replace(`@${botName}`, "").trim();
   var parsed = nlp(removeBotName, lexicon).dehyphenate();
+  console.log(parsed.out('debug'));
   return parsed;
 }
 
 //Crowfall specific terminologies... this will grow to redic lengths.
 let lexicon = {
-  'centaur': ['Singular', 'Race'],
-  'elken': ['Singular', 'Race'],
-  'fae': ['Singular', 'Race'],
-  'guinecean': ['Singular', 'Race'],
-  'half elf': ['Singular', 'Race'],
-  'half giant': ['Singular', 'Race'],
-  'high elf': ['Singular', 'Race'],
-  'human': ['Singular', 'Race'],
-  'minotaur': ['Singular', 'Race'],
-  'nethari': ['Singular', 'Race'],
-  'stoneborn': ['Singular', 'Race'],
-  'wood elf': ['Singular', 'Race'],
-  'assassin': ['Singular', 'Class'],
-  'champion': ['Singular', 'Class'],
-  'cleric': ['Singular', 'Class'],
-  'confessor': ['Singular', 'Class'],
-  'druid': ['Singular', 'Class'],
-  'duelist': ['Singular', 'Class'],
-  'frostweaver': ['Singular', 'Class'],
-  'knight': ['Singular', 'Class'],
-  'myrmidon': ['Singular', 'Class'],
-  'ranger': ['Singular', 'Class'],
-  'templar': ['Singular', 'Class']
+  'centaur': ['Noun', 'Race'],
+  'elken': ['Noun', 'Race'],
+  'fae': ['Noun', 'Race'],
+  'guinecean': ['Noun', 'Race'],
+  'half elf': ['Noun', 'Race'],
+  'half giant': ['Noun', 'Race'],
+  'high elf': ['Noun', 'Race'],
+  'human': ['Noun', 'Race'],
+  'minotaur': ['Noun', 'Race'],
+  'nethari': ['Noun', 'Race'],
+  'stoneborn': ['Noun', 'Race'],
+  'wood elf': ['Noun', 'Race'],
+  'assassin': ['Noun', 'Class'],
+  'champion': ['Noun', 'Class'],
+  'cleric': ['Noun', 'Class'],
+  'confessor': ['Noun', 'Class'],
+  'druid': ['Noun', 'Class'],
+  'duelist': ['Noun', 'Class'],
+  'frostweaver': ['Noun', 'Class'],
+  'knight': ['Noun', 'Class'],
+  'myrmidon': ['Noun', 'Class'],
+  'ranger': ['Noun', 'Class'],
+  'templar': ['Noun', 'Class']
 }

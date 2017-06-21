@@ -11,46 +11,38 @@ exports.action = "tell";
 exports.aliases = ["show", "detail", "search"];
 exports.run = (bot, msg, parsed) => {
   let apiOptions = false;
-  let results = false;
   let races = parsed.match('#Race').out('array');
   let classes = parsed.match('#Class').out('array');
-
+  let results;
+  console.log(classes, races);
   //races search route
   if (races && races.length == 1) {
-    apiOptions = {
-      host: 'api.crowfall.wiki',
-      port: 443,
-      path: `/races/${new Buffer(parsed.match('#Race').out('text')).toString('base64')}`,
-      method: 'GET'
-    };
+    bot.callAPI(`https://api.crowfall.wiki/races/${races[0].split(' ').join('_')}`)
+      .then(function(results) {
+        msg.channel.send(results, {
+          code: true
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   }
   if (races && races.length > 1)
     return msg.channel.send("Alas, in the efforts of preventing spam, I cannot provide information on more than one Crowfall race at time.")
 
   //classes search route
   if (classes && classes.length == 1) {
-    apiOptions = {
-      host: 'api.crowfall.wiki',
-      port: 80,
-      path: `/classes/${new Buffer(parsed.match('#Class').out('text')).toString('base64')}`,
-      method: 'GET'
-    };
+    bot.callAPI(`https://api.crowfall.wiki/classes/${classes[0]}`)
+      .then(function(results) {
+        msg.channel.send(results, {
+          code: true
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   }
   if (classes && classes.length > 1)
     return msg.channel.send("Alas, in the efforts of preventing spam, I cannot provide information on more than one Crowfall class at time.")
 
-  //generic nouns route;
-  //let nouns = `**nouns:** ${parsed.normalize().nouns().toSingular().out()}`;
-  //need to figure out how to make this "work" better with our route options
-
-  if (apiOptions) {
-    results = bot.callAPI(apiOptions);
-    if (results) {
-      msg.channel.send(results, {
-        code: true
-      });
-    } else {
-      msg.channel.send('No results were found, or a route was not determinable');
-    }
-  }
 }

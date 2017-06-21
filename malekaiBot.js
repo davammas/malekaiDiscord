@@ -18,7 +18,7 @@ malekaiBot.altPaths = new Discord.Collection();
 malekaiBot.log = require('./functions/log.js').cmd;
 
 //api-call to the api.crowfall.wiki service
-malekaiBot.callAPI = require('./functions/apiCall.js').cmd;
+malekaiBot.callAPI = require('./functions/callAPI.js').cmd;
 
 //creates link to database and assigns it to a parameter of the bot instance.
 malekaiBot.db = r;

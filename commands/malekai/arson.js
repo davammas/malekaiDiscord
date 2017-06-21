@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require("path");
 
 exports.run = (bot, msg, params, perms = []) => {
-  bot.db.table("classLibrary")
+  bot.db.table("classLibrary") oh oh
     .delete()
     .run()
     .error(function(err) {
