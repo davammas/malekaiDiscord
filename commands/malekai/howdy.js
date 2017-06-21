@@ -24,7 +24,7 @@ exports.run = (bot, msg, params, perms = []) => {
           classCounter++;
           bot.db.table("classLibrary")
             .insert({
-              id: book.class.name.replace(/\W/g, '').trim().split(' ').join('-').toLowerCase(),
+              id: book.class.name.replace(/[^\w-]/g, '').trim().split(' ').join('-').toLowerCase(),
               data_type: 'class',
               name: book.class.name,
               description: book.class.description,
@@ -44,7 +44,7 @@ exports.run = (bot, msg, params, perms = []) => {
           raceCounter++;
           bot.db.table("raceLibrary")
             .insert({
-              id: book.race.name.replace(/\W/g, '').trim().split(' ').join('-').toLowerCase(),
+              id: book.race.name.replace(/[^\w-]/g, '').trim().split(' ').join('-').toLowerCase(),
               data_type: 'race',
               name: book.race.name,
               description: book.race.description,
@@ -64,7 +64,7 @@ exports.run = (bot, msg, params, perms = []) => {
           let tagSearchString = book.discipline.description + " " + book.discipline.stats_granted.join(' ');
           bot.db.table("disciplineLibrary")
             .insert({
-              id: book.discipline.name.replace(/\W/g, '').trim().split(' ').join('-').toLowerCase(),
+              id: book.discipline.name.replace(/[^\w-]/g, '').trim().split(' ').join('-').toLowerCase(),
               data_type: 'discipline',
               name: book.discipline.name,
               type: book.discipline.type,
@@ -92,7 +92,7 @@ exports.run = (bot, msg, params, perms = []) => {
           powerCounter++
           bot.db.table("powerLibrary")
             .insert({
-              id: book.power.name.replace(/\W/g, '').trim().split(' ').join('-').toLowerCase(),
+              id: book.power.name.replace(/[^\w-]/g, '').trim().split(' ').join('-').toLowerCase(),
               data_type: 'power',
               name: book.power.name,
               sources: book.power.sources,
