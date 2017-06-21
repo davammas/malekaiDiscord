@@ -30,6 +30,7 @@ exports.run = (bot, msg, params, perms = []) => {
               description: book.class.description,
               icon: book.class.icon,
               races: book.class.races,
+              powers: book.class.powers,
               tags: findTags(book.class.description)
             }, {
               conflict: 'replace'
@@ -69,7 +70,7 @@ exports.run = (bot, msg, params, perms = []) => {
               type: book.discipline.type,
               description: book.discipline.description,
               icon: book.discipline.icon,
-              can_equip: book.discipline.can_equip,
+              classes: book.discipline.classes,
               stats_granted: book.discipline.stats_granted,
               stats_values: book.discipline.stats_values,
               equips_granted: book.discipline.equips_granted,
@@ -77,7 +78,7 @@ exports.run = (bot, msg, params, perms = []) => {
               slots_removed: book.discipline.slots_removed,
               trays_granted: book.discipline.trays_granted,
               trays_removed: book.discipline.trays_removed,
-              powers_granted: book.discipline.powers_granted,
+              powers: book.discipline.powers,
               tags: findTags(tagSearchString)
             }, {
               conflict: 'replace'
@@ -103,6 +104,7 @@ exports.run = (bot, msg, params, perms = []) => {
               max_targets: book.power.max_targets,
               range: book.power.range,
               next_chain: book.power.next_chain,
+              previous_chain: book.power.previous_chain,
               cost: book.power.cost,
               description: book.power.tooltip,
               icon: book.power.icon,
