@@ -9,11 +9,10 @@ exports.cmd = function pathLoader(bot, currentPath) {
     var stats = fs.statSync(currentFile);
     if (stats.isFile()) {
       let props = require(`${currentFile}`);
-      let alternatePaths = props.aliases.length > 0 ? `(aka ${props.aliases.join(", ")})` : "";
-      bot.log(`Path Loaded for ... "${props.action}" ${alternatePaths}.`);
-      bot.paths.set(props.action.toLowerCase(), props);
-      props.aliases.forEach(alias => {
-        bot.altPaths.set(alias, props.action.toLowerCase());
+      let routes = props.routes.join(", ");
+      bot.log(`Routes Loaded... "${routes}".`);
+      props.routes.forEach(value => {
+        bot.paths.set(value.toLowerCase(), props.run);
       });
     } else if (stats.isDirectory()) {
       pathLoader(bot, currentFile);

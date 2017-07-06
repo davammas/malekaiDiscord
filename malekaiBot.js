@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const nlp = require('natural');
 const config = require('./config');
 const r = require('rethinkdbdash')({
   host: 'localhost',
@@ -29,31 +30,29 @@ malekaiBot.commandLoader(malekaiBot, process.cwd() + '/commands');
 malekaiBot.permissionsCheck = require('./functions/permissionsCheck').cmd;
 
 //loads all natural language processing "paths" into bot.
-malekaiBot.nlp = require('./functions/nlp.js').cmd;
 malekaiBot.pathLoader = require('./functions/pathLoader.js').cmd;
 malekaiBot.pathLoader(malekaiBot, process.cwd() + '/paths');
 
 //this is the new natural language processing path for using malekaiBot
-//work in process... probably wont work ever, sorry for wasting your time.
 malekaiBot.on("message", msg => {
   //looks to see if MalekaiBot was referenced in a mention, he will only respond if he was.
   if (msg.mentions.members.get(malekaiBot.user.id)) {
-    //we need a returned parse here, need the results to move forward with this handler
-    let parsed = malekaiBot.nlp(msg, malekaiBot);
-    let theverbs = parsed.normalize().verbs().out('array');
-    let path = false;
-    theverbs.forEach(function(verb) {
-      if (!path) {
-        if (malekaiBot.paths.has(verb)) {
-          path = malekaiBot.paths.get(verb);
-        } else if (malekaiBot.altPaths.has(verb)) {
-          path = malekaiBot.paths.get(malekaiBot.altPaths.get(verb));
-        }
-        console.log(verb);
+    let scrubbed = msg.cleanContent.trim().replace(malekaiBot.user.username, '').replace(/[^\w\s-]/g, '').toLowerCase();
+    let thePath = false;
+    malekaiBot.paths.forEach((command, path) => {
+      if (scrubbed.includes(path)) {
+        thePath = malekaiBot.paths.get(path);
+        //lets clean up the known part of the sentence we don't need anymore
+        scrubbed = scrubbed.replace(path, '').trim();
+        malekaiBot.log(msg, path, scrubbed);
       }
     })
-    if (path) {
-      return path.run(malekaiBot, msg, parsed);
+    if (thePath) {
+      //lets substract out the search route string, we no longer need it!
+      return thePath(malekaiBot, msg, scrubbed);
+    } else {
+      //replace with default help message for unfound nlp sentences.
+      return msg.reply("I did not understand you. (Try: 'search for', 'tell me about', or 'explain')");
     }
   }
 })
