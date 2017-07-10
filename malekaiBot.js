@@ -24,6 +24,10 @@ malekaiBot.callAPI = require('./functions/callAPI.js').cmd;
 //creates link to database and assigns it to a parameter of the bot instance.
 malekaiBot.db = r;
 
+//commands to handle issues queue
+malekaiBot.newIssue = require('./functions/issueQueueEmbed.js').opened;
+malekaiBot.closedIssue = require('./functions/issueQueueEmbed.js').closed;
+
 //loads all commands into the bot (recursively scans the /command folder)
 malekaiBot.commandLoader = require('./functions/commandLoader.js').cmd;
 malekaiBot.commandLoader(malekaiBot, process.cwd() + '/commands');
@@ -99,6 +103,56 @@ malekaiBot.on("ready", () => {
   malekaiBot.guilds.forEach(function(aGuild) {
     aGuild.members.get(malekaiBot.user.id).setNickname("malekaiBot");
   })
+
+  malekaiBot.db.table("malekaiBot")
+    .filter({
+      rowType: 'setting'
+    })
+    .then(function(botSettings) {
+      let issuesChannel = botSettings.filter(function(search) {
+        return search.name == "IssuesDestination"
+      })
+      //setings loader
+      malekaiBot.issuesChannel = malekaiBot.channels.get(issuesChannel[0].value) ? malekaiBot.channels.get(issuesChannel[0].value) : false;
+      malekaiBot.twitter = [];
+      let subscriptions = botSettings.filter(function(search) {
+        return search.rowType == "subscription"
+      })
+      subscriptions.forEach(function(subscription) {
+        if (subscription.name == 'twitter')
+          malekaiBot.twitter.push(subscription.value);
+      })
+    })
+  //working changefeed
+  malekaiBot.db.table("issuesQueue")
+    .changes({
+      includeTypes: true
+    })
+    .run()
+    .then(function(feed) {
+      feed.each(function(err, change) {
+        if (err) {
+          assert(err instanceof Error);
+          console.log(err.toString());
+          console.log(err.stack);
+        } else {
+          console.log(change, change.new_val, change.type);
+          if (change.type == "add") {
+            return malekaiBot.issuesChannel.send('@here', {
+              embed: malekaiBot.newIssue(change.new_val)
+            })
+          }
+          if (change.type == "change") {
+            return malekaiBot.issuesChannel.send('@here', {
+              embed: malekaiBot.closedIssue(change.new_val)
+            })
+          }
+        }
+      })
+    })
+    .error(function(err) {
+      console.log(err)
+    });
 });
 
 malekaiBot.on("error", (err) => {

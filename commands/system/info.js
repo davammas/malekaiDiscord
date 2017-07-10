@@ -62,9 +62,11 @@ exports.run = (bot, msg, params, perms = []) => {
   poweredBy.push(`Moment.js: **v2.17.1**`);
   theEmbed.addField(`__**Powered By:**__`, poweredBy, true);
   //Source Details
-  theEmbed.addField(`__**malekaiBot Source:**__`, `[https://github.com/TheObsidian/malekaiBot](https://github.com/TheObsidian/malekaiBot)`);
+  theEmbed.addField(`__**malekaiBot Source:**__`, `[https://github.com/MalekaiProject/malekaiDiscord](https://github.com/MalekaiProject/malekaiDiscord)`);
   theEmbed.setFooter(`Brought to you by https://stealthed.blog ​`, bot.user.avatarURL);
-  return msg.channel.send({embed:theEmbed}).catch(console.log);
+  return msg.channel.send({
+    embed: theEmbed
+  }).catch(console.log);
 };
 
 exports.conf = {
