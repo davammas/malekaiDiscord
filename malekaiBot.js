@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const nlp = require('natural');
-const config = require('./config');
+
 const r = require('rethinkdbdash')({
   host: 'localhost',
   db: 'crowfallData',
@@ -9,7 +9,9 @@ const r = require('rethinkdbdash')({
 });
 
 //discord stuff ;)
+let config = require('./config');
 const malekaiBot = new Discord.Client();
+malekaiBot.config = config;
 malekaiBot.commands = new Discord.Collection();
 malekaiBot.aliases = new Discord.Collection();
 malekaiBot.paths = new Discord.Collection();
@@ -23,10 +25,6 @@ malekaiBot.callAPI = require('./functions/callAPI.js').cmd;
 
 //creates link to database and assigns it to a parameter of the bot instance.
 malekaiBot.db = r;
-
-//commands to handle issues queue
-malekaiBot.newIssue = require('./functions/issueQueueEmbed.js').opened;
-malekaiBot.closedIssue = require('./functions/issueQueueEmbed.js').closed;
 
 //loads all commands into the bot (recursively scans the /command folder)
 malekaiBot.commandLoader = require('./functions/commandLoader.js').cmd;
@@ -68,11 +66,11 @@ malekaiBot.on("message", msg => {
     currentPermissions = msg.channel.permissionsFor(malekaiBot.user);
   }
   if (msg.channel.type === "dm" || currentPermissions) {
-    if (!msg.content.toLowerCase().startsWith(config.prefix.toLowerCase())) return;
-    let command = msg.content.split(" ")[0].slice(config.prefix.length).toLowerCase();
+    if (!msg.content.toLowerCase().startsWith(malekaiBot.config.prefix.toLowerCase())) return;
+    let command = msg.content.split(" ")[0].slice(malekaiBot.config.prefix.length).toLowerCase();
     let params = msg.content.split(" ").slice(1);
-    let perms = malekaiBot.permissionsCheck(msg, config.botCreator); //number from 0 to 2
-    malekaiBot.log(`${config.prefix}${command} ${params.join(" ")} executed with permission level ${perms} by ${msg.author.username}`);
+    let perms = malekaiBot.permissionsCheck(msg, malekaiBot.config.botCreator); //number from 0 to 2
+    malekaiBot.log(`${malekaiBot.config.prefix}${command} ${params.join(" ")} executed with permission level ${perms} by ${msg.author.username}`);
     let cmd = false;
     if (malekaiBot.commands.has(command)) {
       cmd = malekaiBot.commands.get(command);
@@ -85,8 +83,8 @@ malekaiBot.on("message", msg => {
     //check if command exists (if so check user permissions) and then run it.
     if (cmd) {
       if (perms < cmd.conf.permLevel) {
-        malekaiBot.log(`${msg.author.toString()} attempted to run an unauthorized command: ${config.prefix}${command}`);
-        msg.channel.sendMessage(`${msg.author.toString()} you are not authorized to run ${config.prefix}${command}`);
+        malekaiBot.log(`${msg.author.toString()} attempted to run an unauthorized command: ${malekaiBot.config.prefix}${command}`);
+        msg.channel.sendMessage(`${msg.author.toString()} you are not authorized to run ${malekaiBot.config.prefix}${command}`);
       } else {
         cmd.run(malekaiBot, msg, params, perms);
       }
@@ -100,10 +98,11 @@ malekaiBot.on("message", msg => {
 
 malekaiBot.on("ready", () => {
   malekaiBot.log("malekaiBot is ready to recieve commands!");
+  //force this name across all servers (i'm picky)
   malekaiBot.guilds.forEach(function(aGuild) {
     aGuild.members.get(malekaiBot.user.id).setNickname("malekaiBot");
   })
-
+  //load per guild settings
   malekaiBot.db.table("malekaiBot")
     .filter({
       rowType: 'setting'
@@ -123,36 +122,6 @@ malekaiBot.on("ready", () => {
           malekaiBot.twitter.push(subscription.value);
       })
     })
-  //working changefeed
-  malekaiBot.db.table("issuesQueue")
-    .changes({
-      includeTypes: true
-    })
-    .run()
-    .then(function(feed) {
-      feed.each(function(err, change) {
-        if (err) {
-          assert(err instanceof Error);
-          console.log(err.toString());
-          console.log(err.stack);
-        } else {
-          console.log(change, change.new_val, change.type);
-          if (change.type == "add") {
-            return malekaiBot.issuesChannel.send('@here', {
-              embed: malekaiBot.newIssue(change.new_val)
-            })
-          }
-          if (change.type == "change") {
-            return malekaiBot.issuesChannel.send('@here', {
-              embed: malekaiBot.closedIssue(change.new_val)
-            })
-          }
-        }
-      })
-    })
-    .error(function(err) {
-      console.log(err)
-    });
 });
 
 malekaiBot.on("error", (err) => {

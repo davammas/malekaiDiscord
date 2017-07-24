@@ -4,6 +4,6 @@ exports.cmd = function(logMessage) {
   let log = (msg) => {
     console.log(`[${moment().format("DD/MM/YY@HH:mmA")}] ${msg}`);
   };
-  logMessage = timestamp + logMessage ;
+  logMessage = timestamp + logMessage;
   log(logMessage);
 }

@@ -24,7 +24,7 @@ exports.run = (bot, msg, params, perms = []) => {
   let cpuArray = cpu[0].model.replace(/\s+/g, " ").trim().split(" ");
   let cpuCores = cpu.length;
   let cpuSpeed = (cpu[0].speed / 1000) + "MHZ";
-  let theEmbed = new Discord.RichEmbed();
+  let theEmbed = new Discord.MessageEmbed();;
   theEmbed.setColor(11141396);
   theEmbed.setTitle(`__**MalekaiBot**__`);
   theEmbed.setDescription('Without me, you are nothing.')
